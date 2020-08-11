@@ -18,7 +18,7 @@ class Task implements Draggable {
   status: string;
   element: HTMLLIElement;
   timestamp: string;
-  timer: number = 0;
+  timestring: string = 'just now';
 
   constructor(title: string) {
     this.title = title;
@@ -32,12 +32,6 @@ class Task implements Draggable {
   private configure() {
     this.element.innerHTML =
     this.title + ' - <span class=kanban-list__timestamp>' + moment(this.timestamp).fromNow() + '</span>';
-    this.timer = <any>setInterval(
-      () =>
-        (this.element.innerHTML =
-          this.title + ' - <span class=kanban-list__timestamp>' + moment(this.timestamp).fromNow()) + '</span>',
-      5000,
-    );
 
     this.element.classList.add('kanban-list__item');
     this.element.draggable = true;
@@ -60,7 +54,12 @@ class TaskState {
   listeners: Function[] = [];
   private static instanse: TaskState;
 
-  private constructor() {}
+  private constructor() {
+    setInterval(() => {
+      this.updateTimeString();
+      this.updateListeners();
+    }, 10000)
+  }
 
   static getInstanse() {
     if (this.instanse) {
@@ -87,6 +86,13 @@ class TaskState {
 
       this.updateListeners();
     }
+  }
+
+  updateTimeString() {
+    this.taskList.forEach((task) => {
+      task.element.innerHTML =
+      task.title + ' - <span class=kanban-list__timestamp>' + moment(task.timestamp).fromNow() + '</span>';
+    })
   }
 
   addListener(listenerFn: Function) {

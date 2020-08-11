@@ -8,6 +8,9 @@ body {
   background-color: #b4bde0;
   color: #283153;
   font-family: 'Oswald', sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .btn {
@@ -44,7 +47,6 @@ body {
   position: relative;
   font-size: 36px;
   font-weight: normal;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 1);
   z-index: 10;
 }
 
@@ -53,7 +55,6 @@ body {
   font-size: 18px;
   font-weight: normal;
   text-transform: uppercase;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 1);
   z-index: 10;
 }
 
@@ -162,4 +163,25 @@ body {
   font-size: 16px;
   font-style: italic;
   color: #3b82ee;
+}
+
+.main-footer {
+  margin-top: auto;
+  min-height: 100px;
+  background-color: #3b82ee;
+  color: #e8e9ea;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.main-footer__link {
+  color: #e8e9ea;
+  margin: 0 20px;
+}
+
+.main-footer__avatar {
+  margin-right: 20px;
+  border-radius: 50%;
 }
