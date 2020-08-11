@@ -1,0 +1,23 @@
+{
+  "name": "kanban-project",
+  "version": "1.0.0",
+  "description": "Simple kanban web-application.",
+  "main": "bundle.js",
+  "author": "Maxim Kolotushkin <makkolot@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "ts-loader": "^8.0.2",
+    "typescript": "^3.9.7",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "moment": "^2.27.0",
+    "shortid": "^2.2.15"
+  }
+}

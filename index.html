@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Канбан доска</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="./dist/bundle.js" defer></script>
+  </head>
+  <body>
+    <header class="main-header">
+      <nav class="main-menu">
+        <h1 class="main-menu__logo">Канбан доска</h1>
+        <h2 class="main-menu__description">
+          Организуй задачи в стиле "Тойота"
+        </h2>
+      </nav>
+    </header>
+    <main>
+      <div class="add-task">
+        <form class="add-task__form" id="add-form">
+          <input type="text" name="task-name" id="task-name" class="add-task__input" maxlength="50" placeholder="Новая задача..."> 
+          <input type="submit" value="Добавить задачу" class="btn">
+        </form>
+      </div>
+      <div class="main-workspace">
+      <section id="todo" class="kanban-desk kanban-desk--todo">
+        <ul class="kanban-list">
+        </ul>
+      </section>
+      <section id="doing" class="kanban-desk kanban-desk--doing">
+        <ul class="kanban-list">
+        </ul>
+      </section>
+      <section id="done" class="kanban-desk kanban-desk--done">
+        <ul class="kanban-list">
+        </ul>
+      </section>
+    </div>
+    </main>
+  </body>
+</html>
