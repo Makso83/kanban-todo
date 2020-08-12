@@ -20,21 +20,16 @@ class Task implements Draggable {
   timestamp: string;
   timestring: string = 'just now';
 
-  constructor(title: string) {
+  constructor(title: string, timestamp: string, status: string) {
     this.title = title;
     this.id = shortid.generate();
-    this.status = 'todo';
-    this.timestamp = moment();
+    this.status = status;
+    this.timestamp = timestamp;
     this.element = document.createElement('li');
     this.configure();
   }
 
   private configure() {
-    this.element.innerHTML =
-    this.title + ' - <span class=kanban-list__timestamp>' + moment(this.timestamp).fromNow() + '</span>';
-
-    this.element.classList.add('kanban-list__item');
-    this.element.draggable = true;
     this.element.addEventListener(
       'dragstart',
       this.dragStartHandler.bind(this),
@@ -55,10 +50,19 @@ class TaskState {
   private static instanse: TaskState;
 
   private constructor() {
+    const dataFromLocalStorage = localStorage.getItem('tasks');
+    console.log(dataFromLocalStorage);
+    if (dataFromLocalStorage) {
+      const listFromLocalS = JSON.parse(dataFromLocalStorage);
+      this.taskList = listFromLocalS.map(
+        (prj: Task) => new Task(prj.title, prj.timestamp, prj.status),
+      );
+      this.updateListeners();
+    }
     setInterval(() => {
       this.updateTimeString();
-      this.updateListeners();
-    }, 10000)
+      this.updateState();
+    }, 60000);
   }
 
   static getInstanse() {
@@ -66,6 +70,15 @@ class TaskState {
       return this.instanse;
     }
     return new TaskState();
+  }
+
+  private updateState() {
+    this.updateListeners();
+    this.updateLocalStorage();
+  }
+
+  updateLocalStorage() {
+    localStorage.setItem('tasks', JSON.stringify(this.taskList));
   }
 
   private updateListeners() {
@@ -76,7 +89,7 @@ class TaskState {
 
   addTask(newTask: Task) {
     this.taskList.push(newTask);
-    this.updateListeners();
+    this.updateState();
   }
 
   moveTask(taskId: string, newStatus: string) {
@@ -84,15 +97,18 @@ class TaskState {
     if (selectedTask) {
       selectedTask.status = newStatus;
 
-      this.updateListeners();
+      this.updateState();
     }
   }
 
   updateTimeString() {
     this.taskList.forEach((task) => {
       task.element.innerHTML =
-      task.title + ' - <span class=kanban-list__timestamp>' + moment(task.timestamp).fromNow() + '</span>';
-    })
+        task.title +
+        ' - <span class=kanban-list__timestamp>' +
+        moment(task.timestamp).fromNow() +
+        '</span>';
+    });
   }
 
   addListener(listenerFn: Function) {
@@ -116,7 +132,7 @@ class TaskInput {
     evt.preventDefault();
     let content = this.input.value;
     if (content.trim() !== '') {
-      taskState.addTask(new Task(content));
+      taskState.addTask(new Task(content, moment(), 'todo'));
       this.input.value = '';
     }
   }
@@ -168,6 +184,14 @@ class Desk implements DragTarget {
     const list = this.element.querySelector('ul')! as HTMLUListElement;
     list.innerHTML = '';
     this.adjustedProjects.map((prj) => {
+      prj.element.innerHTML =
+        prj.title +
+        ' - <span class=kanban-list__timestamp>' +
+        moment(prj.timestamp).fromNow() +
+        '</span>';
+      console.log(prj.element);
+      prj.element.classList.add('kanban-list__item');
+      prj.element.draggable = true;
       list.insertAdjacentElement('beforeend', prj.element);
     });
   }
