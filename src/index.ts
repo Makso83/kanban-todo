@@ -50,7 +50,7 @@ class TaskState {
   private static instanse: TaskState;
 
   private constructor() {
-    const dataFromLocalStorage = localStorage.getItem('tasks');
+    const dataFromLocalStorage = window.localStorage.getItem('tasks');
     console.log(dataFromLocalStorage);
     if (dataFromLocalStorage) {
       const listFromLocalS = JSON.parse(dataFromLocalStorage);
@@ -78,7 +78,7 @@ class TaskState {
   }
 
   updateLocalStorage() {
-    localStorage.setItem('tasks', JSON.stringify(this.taskList));
+    window.localStorage.setItem('tasks', JSON.stringify(this.taskList));
   }
 
   private updateListeners() {
