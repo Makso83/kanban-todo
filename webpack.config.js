@@ -1,7 +1,8 @@
 const path = require('path');
+const webpack = require('webpack')
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: './src/index.ts',
   output: {
     filename: 'bundle.js',
@@ -24,7 +25,8 @@ module.exports = {
     ]
   },
   plugins: [
-
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+ 
   ]
 
 }

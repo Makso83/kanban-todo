@@ -1,5 +1,8 @@
 const shortid = require('shortid');
 const moment = require('moment');
+import 'moment/locale/ru';
+
+moment.locale('ru');
 
 interface Draggable {
   dragStartHandler(event: DragEvent): void;
